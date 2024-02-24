@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import List from "./List";
+import Detail from "./Detail";
+import Cart from "./Cart";
 
-export default class ExShoe extends Component {
+export default class Ex_Shoe extends Component {
   state = {
     shoeArr: [
       {
@@ -145,23 +147,61 @@ export default class ExShoe extends Component {
         image: "http://svcy3.myclass.vn/images/nike-air-max-270-react.png",
       },
     ],
-    detail: {},
+    detail: {
+      id: 1,
+      name: "Adidas Prophere",
+      alias: "adidas-prophere",
+      price: 350,
+      description:
+        "The adidas Primeknit upper wraps the foot with a supportive fit that enhances movement.\r\n\r\n",
+      shortDescription:
+        "The midsole contains 20% more Boost for an amplified Boost feeling.\r\n\r\n",
+      quantity: 995,
+      image: "http://svcy3.myclass.vn/images/adidas-prophere.png",
+    },
+
+    cart: [], // chứa object shoe khi user click button add
   };
 
   handleChangeDetail = (shoe) => {
-    console.log("sun 1");
     this.setState({
       detail: shoe,
     });
   };
+  handleAddToCart = (shoe) => {
+    /**
+     *  Th1: sản phẩm chưa có trong giỏ hàng => push , số lượng mặc định là 1
+     *  Th2 : sản phẩm đã có trong giỏ hàng=> không push, tăng số lượng lên thêm 1 đơn vị
+     */
+    let cloneCart = [...this.state.cart];
+    // kiểm tra sản phẩm được thêm có trong giỏ hàng hay chưa
+    let index = cloneCart.findIndex((item) => {
+      return item.id == shoe.id;
+    });
+    console.log("😀 - index", index);
+    if (index == -1) {
+      // ko tìm thấy => th1
+      // tạo object mới từ object cũ có thêm key amout
+      let newShoe = { ...shoe, amount: 1 };
+      cloneCart.push(newShoe);
+    } else {
+      // tìm thấy => th2
+      // tăng số lượng lên 1
+      cloneCart[index].amount++;
+    }
+    this.setState({ cart: cloneCart });
+  };
 
   render() {
     return (
-      <div className="container mt-5  ">
+      <div className="row w-100">
+        <Cart cart={this.state.cart} />
         <List
+          handleAddToCart={this.handleAddToCart}
           handleViewDetail={this.handleChangeDetail}
           shoeArr={this.state.shoeArr}
         />
+        <Detail shoe={this.state.detail} />
       </div>
     );
   }

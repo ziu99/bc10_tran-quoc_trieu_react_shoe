@@ -1,11 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import ExShoe from './ExShoe/ExShoe';
+import logo from "./logo.svg";
+import "./App.css";
+
+import Ex_Shoe from "./Ex_Shoe/Ex_Shoe";
 
 function App() {
   return (
     <div>
- <ExShoe/>
+      <Ex_Shoe />
     </div>
   );
 }

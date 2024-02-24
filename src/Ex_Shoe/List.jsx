@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Item from "./Item";
 
-export default class extends Component {
-  renderList = () => {
+export default class List extends Component {
+  renderListShoe = () => {
     return this.props.shoeArr.map((item) => {
       return (
         <Item
+          handleClickAdd={this.props.handleAddToCart}
           handleClickView={this.props.handleViewDetail}
           key={item.id}
           data={item}
@@ -14,6 +15,11 @@ export default class extends Component {
     });
   };
   render() {
-    return <div className="row">{this.renderList()}</div>;
+    return <div className="row col-7">{this.renderListShoe()}</div>;
   }
 }
+
+let a = 2;
+let b = a;
+let c = b;
+let d = c;
